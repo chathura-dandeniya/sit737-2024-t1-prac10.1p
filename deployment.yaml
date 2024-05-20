@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cal
+  template:
+    metadata:
+      labels:
+        app: cal
+    spec:
+      containers:
+        - name: cal
+          image: australia-southeast1-docker.pkg.dev/sit737-24t1-dandeniya-3dae050/sit737-2024-t1-10-1p/cal:1.1.1
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cal
+spec:
+  selector:
+    app: cal
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
